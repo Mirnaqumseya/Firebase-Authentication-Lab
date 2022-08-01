@@ -1,8 +1,21 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask import session as login_session
 import pyrebase
+config = {
+ "apiKey": "AIzaSyCGCHysCQs_oHGc3rQ2MCJ82vbsr3eBYVo",
+  "authDomain": "fir-160ae.firebaseapp.com",
+  "databaseURL": "https://fir-160ae-default-rtdb.europe-west1.firebasedatabase.app",
+  "projectId": "fir-160ae",
+  "storageBucket": "fir-160ae.appspot.com",
+  "messagingSenderId": "531779820040",
+  "appId": "1:531779820040:web:3326b20b3c332e38c54fbd",
+  "measurementId": "G-Z33RMDTMYB"
+  "databaseURL" : ""}
 
-app = Flask(__name__, template_folder='templates', static_folder='static')
+  firebase = pyrebase initialize_app (config)
+  auth = firebase.auth()
+
+  app = Flask(__name__, template_folder='templates', static_folder='static')
 app.config['SECRET_KEY'] = 'super-secret-key'
 
 
@@ -13,6 +26,16 @@ def signin():
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
+    error = ""
+   if request.method == 'POST':
+       email = request.form['email']
+       password = request.form['password']
+       try:
+            login_session['user'] = 
+auth.create_user_with_email_and_password(email, password)
+           return redirect(url_for('home'))
+       except:
+           error = "Authentication failed"
     return render_template("signup.html")
 
 
